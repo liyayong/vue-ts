@@ -17,7 +17,7 @@ import {Component,Vue,Prop, Emit, Watch, Model} from "vue-property-decorator";
 @Component
 export default class HomeChild extends Vue {
     mounted() {
-     console.log('childmounted')
+     console.log('childmountedaaa')    
    }
    
    //接收父组件的v-model参数，并且关联上子组件的改变值，传给父组件
