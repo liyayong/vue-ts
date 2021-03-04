@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <p>我是home子页面{{sendSon}}</p>
+        <div>我是home子页面{{sendSon}}</div>
         <el-input v-model="sendFather" style="width:20%"></el-input>
         <el-button @click="chanName">改变名称</el-button>
 
@@ -8,17 +8,24 @@
          <input type="checkbox" :checked="checked" 
             @change="valueChange"
 	    >
+        <div>{{bar}}</div>
+        <div>{{other}}</div>
     </div>
 </template>
 
 <script lang='ts'>
-import {Component,Vue,Prop, Emit, Watch, Model} from "vue-property-decorator";
+import {Component,Vue,Prop, Emit, Watch, Model, Provide, Inject} from "vue-property-decorator";
 
 @Component
 export default class HomeChild extends Vue {
     mounted() {
      console.log('childmountedaaa')    
    }
+
+    //子组件使用inject接收父组件 provide过来的值;父组件如果指定了别名， 应该使用别名接收
+    @Inject() private readonly bar!:string
+    //父组件使用别名的
+    @Inject() private readonly other!:string
    
    //接收父组件的v-model参数，并且关联上子组件的改变值，传给父组件
    @Model('changeval',{type:Boolean}) private checked!:boolean

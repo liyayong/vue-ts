@@ -1,6 +1,11 @@
-export function Confim(params:any) {
-    console.log(params)
-    params.prototype.run = function() {
-        console.log('我是一个run方法')
+export const resetList = () =>{
+    return function(target:{[key:string]:any},name:string,descriptor:{[key:string]:any}){
+        const fn = descriptor.value
+        descriptor.value = function() {
+            this.isLoading = false;
+            this.page = 1;
+            this.list = []
+            fn.call(this)
+        }
     }
 }

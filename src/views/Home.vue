@@ -17,8 +17,9 @@
   </div>
 </template>
 <script lang='ts'>
-import {Component,Model,Vue, Watch} from 'vue-property-decorator'
-
+import {Component,Vue, Watch,Provide} from 'vue-property-decorator'
+//引入自定义装饰器
+import {resetList} from '@/components/myDecorator/index'
 
 import Child from './homeChild.vue'
 @Component({
@@ -29,6 +30,16 @@ import Child from './homeChild.vue'
 
 
 export default class Homes extends Vue{
+//使用装饰器
+    @resetList()
+    private _reset(){
+        console.log(this,'this')
+    }
+
+    //父组件使用provide，也可以指定别名 @Provide('other')
+    @Provide() private bar:string = '111'
+    @Provide('other') private baar:string = '222'
+
     beforeCreate():void {
         console.log('beforeCreate')
     }
@@ -40,6 +51,7 @@ export default class Homes extends Vue{
     }
     mounted():void {
         console.log('mounted')
+        console.log(this,'this')
     }
 
     private foo: boolean = true
@@ -53,6 +65,8 @@ export default class Homes extends Vue{
         type:'区域活动'
     }
     oldNames = this.formLabelAlign['name']
+
+
 
     //接受子组件传递的参数   
      getNewName(val:String) {
