@@ -3,16 +3,27 @@
         <p>我是home子页面{{sendSon}}</p>
         <el-input v-model="sendFather" style="width:20%"></el-input>
         <el-button @click="chanName">改变名称</el-button>
+
+        <!-- 子组件的 valueChange方法第一个参数和@Model的第一个参数保持一致 -->
+         <input type="checkbox" :checked="checked" 
+            @change="valueChange"
+	    >
     </div>
 </template>
 
 <script lang='ts'>
-import {Component,Vue,Prop, Emit, Watch} from "vue-property-decorator";
+import {Component,Vue,Prop, Emit, Watch, Model} from "vue-property-decorator";
 
 @Component
 export default class HomeChild extends Vue {
     mounted() {
      console.log('childmounted')
+   }
+   
+   //接收父组件的v-model参数，并且关联上子组件的改变值，传给父组件
+   @Model('changeval',{type:Boolean}) private checked!:boolean
+   valueChange(e:any) {
+       this.$emit('changeval',e.target.checked)
    }
    @Prop() sendSon!:String
    sendFather:String = '小红'

@@ -12,11 +12,14 @@
             <el-input v-model="formLabelAlign.type"></el-input>
         </el-form-item>
     </el-form>
-    <Child :sendSon='sendSon' @changeName="getNewName" ref="sonRef"></Child>
+    <el-button @click="changeFoo">改变父组件foo {{foo}}</el-button>
+    <Child :sendSon='sendSon' @changeName="getNewName" ref="sonRef" v-model='foo'></Child>
   </div>
 </template>
 <script lang='ts'>
-import {Component,Vue, Watch} from 'vue-property-decorator'
+import {Component,Model,Vue, Watch} from 'vue-property-decorator'
+
+
 import Child from './homeChild.vue'
 @Component({
      components:{
@@ -37,6 +40,11 @@ export default class Homes extends Vue{
     }
     mounted():void {
         console.log('mounted')
+    }
+
+    private foo: boolean = true
+    changeFoo() {
+        this.foo = !this.foo
     }
     //传参给子页面
     private formLabelAlign:any = {
